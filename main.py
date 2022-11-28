@@ -9,7 +9,7 @@ class DrawInfo:
     green = 0, 255, 255
     red = 255, 0 ,0
     grey = 128, 128, 128
-    BACKGROUND_COL = white
+    BACKGROUND_COL = black
     side_pad = 100
     top_pad = 150
 
@@ -42,10 +42,10 @@ def draw_list(draw_info):
     lst = draw_info.lst
     for i, val in enumerate(lst):
         x = draw_info.start_x + i * draw_info.block_width
-        y = draw_info.height - (val - draw_info.min_val)*draw_info.block_height
+        y = draw_info.height - (val - draw_info.min_val) * draw_info.block_height
 
         color = draw_info.GRADIENTS[i % 3]
-        pygame.draw.rect(draw_info.window, color, (x,y,draw_info.block_width, draw_info.block_height))
+        pygame.draw.rect(draw_info.window, color, (x,y,draw_info.block_width, draw_info.height))
 
 
 def generate_starting_list(n, min_val, max_val):
@@ -73,6 +73,15 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+            if event.type != pygame.KEYDOWN:
+                continue
+
+            if event.key == pygame.K_r:
+                lst = generate_starting_list(n, min_val, max_val)
+                draw_info.set_list(lst)
+
+
 
     pygame.quit()
 
